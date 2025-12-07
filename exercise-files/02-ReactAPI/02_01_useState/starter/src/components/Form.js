@@ -1,71 +1,67 @@
-import { useState, useRef } from "react";
-import useStore from "../store";
-
-const ArchiveButton = () => {
-  const archive = useStore((state) => state.archive);
-  const isVisible = useStore((state) => state.all.some((item) => item.done));
-
+export default function Form({ generate, guess, onChange, values }) {
   return (
-    <button
-      type="button"
-      className="btn btn-danger btn-sm"
-      style={{ visibility: `${isVisible ? "visible" : "hidden"} ` }}
-      onClick={archive}
-    >
-      archive done
-    </button>
-  );
-};
+    <div style={{ width: "50%" }}>
+      <div className="p-2" style={{ width: "100%" }}>
+        <div className="row">
+          <div className="col-8">
+            <span className="text-secondary h1 mb-2 mx-5">
+              {values.random1}
+            </span>
+            <span className="text-secondary h1 mb-2 mx-5">
+              {values.random2}
+            </span>
+          </div>
+          <button
+            onClick={generate}
+            className="col-4 btn btn-info text-light btn-sm"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor"
+              className="bi bi-arrow-clockwise"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+              />
+              <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-const ShowButton = () => {
-  const show = useStore((state) => state.show);
-  return (
-    <div className="form-check">
-      <input
-        id="show"
-        type="checkbox"
-        className="form-check-input"
-        onChange={(e) => show(e.target.checked)}
-      />
-      <label className="form-check-label" for="show">
-        {" "}
-        show completed
-      </label>
+      <form className="py-4 row g-0">
+        <div className="col-8 px-2">
+          <input
+            type="number"
+            className="form-control"
+            onChange={(e) => onChange(e.target.value)}
+          />
+        </div>
+        <div className="col-4">
+          <button
+            type="button"
+            className="btn btn-info text-light"
+            style={{ width: "100%" }}
+            onClick={guess}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor"
+              className="bi bi-plus-circle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+          </button>
+        </div>
+      </form>
     </div>
   );
-};
-const Form = () => {
-  const ref = useRef();
-  const submit = useStore((state) => state.submit);
-  const [input, setInput] = useState("");
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (!input) {
-      return false;
-    }
-    const newItem = {
-      id: new Date().getMilliseconds(),
-      task: input,
-      done: false,
-    };
-    submit(newItem);
-    setInput("");
-    ref.current.value = null;
-  };
-  return (
-    <form onSubmit={onSubmit} className="mb-4">
-      <input
-        ref={ref}
-        className="form-control mb-4"
-        type="text"
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <div className="d-flex justify-content-between">
-        <ShowButton />
-        <ArchiveButton />
-      </div>
-    </form>
-  );
-};
-export default Form;
+}
