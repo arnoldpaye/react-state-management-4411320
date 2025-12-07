@@ -1,11 +1,10 @@
 import { useState, useRef } from "react";
 import useStore from "../store";
 
-
 const ArchiveButton = () => {
-  const archive = useStore(state => state.archive)
+  const archive = useStore((state) => state.archive);
   const isVisible = useStore((state) => state.all.some((item) => item.done));
-    
+
   return (
     <button
       type="button"
@@ -19,7 +18,7 @@ const ArchiveButton = () => {
 };
 
 const ShowButton = () => {
-  const show = useStore(state => state.show)
+  const show = useStore((state) => state.show);
   return (
     <div className="form-check">
       <input
@@ -37,7 +36,7 @@ const ShowButton = () => {
 };
 const Form = () => {
   const ref = useRef();
-  const submit = useStore(state => state.submit)
+  const submit = useStore((state) => state.submit);
   const [input, setInput] = useState("");
 
   const onSubmit = (e) => {
@@ -50,7 +49,7 @@ const Form = () => {
       task: input,
       done: false,
     };
-    submit(newItem)
+    submit(newItem);
     setInput("");
     ref.current.value = null;
   };
