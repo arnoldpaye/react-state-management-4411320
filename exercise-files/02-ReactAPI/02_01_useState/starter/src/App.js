@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 
 /*
@@ -99,7 +99,13 @@ function Result({ result, input }) {
   );
 }
 
+const initialState = {};
+
+function reducer() {}
+
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const [values, setValues] = useState({ random1: 0, random2: 0 });
   const [input, setInput] = useState(0);
   const [result, checkResult] = useState(0);
