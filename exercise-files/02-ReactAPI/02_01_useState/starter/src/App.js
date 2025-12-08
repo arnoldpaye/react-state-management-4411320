@@ -1,8 +1,9 @@
-import { useReducer } from "react";
+import { useReducer, useContext, useRef } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Result from "./components/Result";
 import Score from "./components/Score";
+import { Context } from "./context";
 
 /*
 1 - generate two new random numbers
@@ -12,40 +13,12 @@ import Score from "./components/Score";
 5 - If the sum is not equal to the user input, display "Try Again :("
 */
 
-const initialState = {
-  values: {
-    random1: 0,
-    random2: 0,
-  },
-  input: 0,
-  result: 0,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "setValues":
-      return {
-        ...state,
-        values: action.payload.values,
-      };
-    case "setInput":
-      return {
-        ...state,
-        input: action.payload.input,
-      };
-    case "checkResult":
-      return {
-        ...state,
-        result: action.payload.result,
-      };
-    default:
-      return state;
-  }
-}
-
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { input, values, result } = state;
+  const ref = useRef();
+  const {
+    state: { input, values, result },
+    dispatch,
+  } = useContext(Context);
 
   const generateRandomValues = () => {
     const random1 = Math.floor(Math.random() * 50);
@@ -67,6 +40,7 @@ function App() {
         <Score count={0} />
         <div className="d-flex justify-content-around">
           <Form
+            ref={ref}
             generate={generateRandomValues}
             guess={guessTheNumber}
             onChange={(value) =>
