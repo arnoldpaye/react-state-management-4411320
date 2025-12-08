@@ -1,4 +1,27 @@
-export default function Form({ generate, guess, onChange, values }) {
+import { useContext, useRef } from "react";
+import { Context } from "../context";
+
+export default function Form() {
+  const ref = useRef();
+  const {
+    state: { values },
+    dispatch,
+  } = useContext(Context);
+
+  const generate = () => {
+    const random1 = Math.floor(Math.random() * 50);
+    const random2 = Math.floor(Math.random() * 50);
+    dispatch({ type: "setValues", payload: { values: { random1, random2 } } });
+  };
+
+  const guess = () => {
+    dispatch({
+      type: "checkResult",
+      payload: { result: values.random1 + values.random2 },
+    });
+    ref.current.value = null;
+  };
+
   return (
     <div style={{ width: "50%" }}>
       <div className="p-2" style={{ width: "100%" }}>
@@ -36,9 +59,12 @@ export default function Form({ generate, guess, onChange, values }) {
       <form className="py-4 row g-0">
         <div className="col-8 px-2">
           <input
+            ref={ref}
             type="number"
             className="form-control"
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) =>
+              dispatch({ type: "setInput", payload: { input: e.target.value } })
+            }
           />
         </div>
         <div className="col-4">

@@ -1,9 +1,8 @@
-import { useReducer, useContext, useRef } from "react";
+import { useRef } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Result from "./components/Result";
 import Score from "./components/Score";
-import { Context } from "./context";
 
 /*
 1 - generate two new random numbers
@@ -15,40 +14,15 @@ import { Context } from "./context";
 
 function App() {
   const ref = useRef();
-  const {
-    state: { input, values, result },
-    dispatch,
-  } = useContext(Context);
-
-  const generateRandomValues = () => {
-    const random1 = Math.floor(Math.random() * 50);
-    const random2 = Math.floor(Math.random() * 50);
-    dispatch({ type: "setValues", payload: { values: { random1, random2 } } });
-  };
-
-  const guessTheNumber = () => {
-    dispatch({
-      type: "checkResult",
-      payload: { result: values.random1 + values.random2 },
-    });
-  };
 
   return (
     <div className="p-5" style={{ width: "80%" }}>
       <fieldset>
         <legend className="text-bold">Guess the Number</legend>
-        <Score count={0} />
+        <Score />
         <div className="d-flex justify-content-around">
-          <Form
-            ref={ref}
-            generate={generateRandomValues}
-            guess={guessTheNumber}
-            onChange={(value) =>
-              dispatch({ type: "setInput", payload: { input: value } })
-            }
-            values={values}
-          />
-          <Result input={input} result={result} />
+          <Form />
+          <Result />
         </div>
       </fieldset>
     </div>

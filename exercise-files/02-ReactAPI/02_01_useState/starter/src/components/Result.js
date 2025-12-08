@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../context";
 
-export default function Result({ result, input }) {
+export default function Result() {
+  const {
+    state: { result, input },
+  } = useContext(Context);
   const [message, setMessage] = useState("");
   useEffect(() => {
     const answer = result === parseInt(input);
