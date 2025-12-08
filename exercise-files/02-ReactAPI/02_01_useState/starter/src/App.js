@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Result from "./components/Result";
+import Score from "./components/Score";
 
 /*
 1 - generate two new random numbers
@@ -63,6 +64,7 @@ function App() {
     <div className="p-5" style={{ width: "80%" }}>
       <fieldset>
         <legend className="text-bold">Guess the Number</legend>
+        <Score count={0} />
         <div className="d-flex justify-content-around">
           <Form
             generate={generateRandomValues}
