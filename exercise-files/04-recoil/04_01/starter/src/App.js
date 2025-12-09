@@ -18,42 +18,40 @@ const items = [
 
 function App() {
   const ref = useRef();
-  const [list, setList] = useState(items)
-  const [all, setAll] = useState(items)
-  const [isFiltered, filtering] = useState(false)
+  const [list, setList] = useState(items);
+  const [all, setAll] = useState(items);
+  const [isFiltered, filtering] = useState(false);
   const [input, setInput] = useState("");
- 
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!input) {
       return false;
     }
-     const newItem = {
-        id: new Date().getMilliseconds(),
-        task: input,
-        done: false,
-      };
-    setAll([...all, newItem])
-    setList([...items, newItem])
+    const newItem = {
+      id: new Date().getMilliseconds(),
+      task: input,
+      done: false,
+    };
+    setAll([...all, newItem]);
+    setList([...items, newItem]);
     setInput("");
     ref.current.value = null;
   };
-  const show = (e) => filtering(e.target.checked)
+  const show = (e) => filtering(e.target.checked);
   const check = (id) => {
     const updated = all.map((item) => {
-      return item.id === id
-        ? { ...item, done: !item.done }
-        : item;
+      return item.id === id ? { ...item, done: !item.done } : item;
     });
-    setList(updated)
-    setAll(updated)
-  }
+    setList(updated);
+    setAll(updated);
+  };
   const archive = () => {
-    const all_filtered = all.filter((item) => !item.done)
-    const filtered = list.filter((item) => !item.done)
-    setList(filtered)
-    setAll(all_filtered)
-  }
+    const all_filtered = all.filter((item) => !item.done);
+    const filtered = list.filter((item) => !item.done);
+    setList(filtered);
+    setAll(all_filtered);
+  };
 
   const isVisible = useMemo(() => {
     return all.some((item) => item.done);
