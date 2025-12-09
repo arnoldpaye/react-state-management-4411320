@@ -1,4 +1,5 @@
 import { useState, useRef, useMemo } from "react";
+import { atom } from "recoil";
 import "./App.css";
 
 const styles = {
@@ -15,6 +16,26 @@ const items = [
   { id: 2, task: "buy groceries", done: false },
   { id: 3, task: "learn Redux", done: false },
 ];
+
+const listState = atom({
+  key: "listState",
+  default: items,
+});
+
+const allState = atom({
+  key: "allState",
+  default: items,
+});
+
+const filterState = atom({
+  key: "filterState",
+  default: false,
+});
+
+const inputValue = atom({
+  key: "inputValue",
+  default: "",
+});
 
 function App() {
   const ref = useRef();
