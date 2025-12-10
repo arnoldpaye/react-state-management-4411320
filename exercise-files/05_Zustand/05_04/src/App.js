@@ -1,5 +1,9 @@
 import { useState, useRef, useMemo } from "react";
 import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Form from "./components/Form";
+import List from "./components/List";
 
 const styles = {
   container: {
@@ -20,70 +24,6 @@ const items = [
   { id: 2, task: "buy groceries", done: false },
   { id: 3, task: "learn Redux", done: false },
 ];
-
-function Header({ count }) {
-  return (
-    <div className="p-4">
-      <h1>Todos</h1>
-      <p>{count}</p>
-    </div>
-  );
-}
-
-function Footer({ archive, filter, isVisible }) {
-  return (
-    <div
-      className="d-flex justify-content-between p-2"
-      style={{ background: "#bdc3c7" }}
-    >
-      <form
-        className="d-flex justify-content-start align-self-center"
-        style={{ height: "auto" }}
-        onChange={(e) => filter(e.target.value)}
-      >
-        <input
-          className="form-check-input"
-          value="all"
-          type="radio"
-          name="radioFilter"
-          id="flexRadioDefault1"
-        />
-        <label className="form-check-label" for="flexRadioDefault1">
-          &nbsp; all &nbsp;
-        </label>
-
-        <input
-          className="form-check-input"
-          value="active"
-          type="radio"
-          name="radioFilter"
-          id="flexRadioDefault2"
-        />
-        <label className="form-check-label" for="flexRadioDefault2">
-          &nbsp; active &nbsp;
-        </label>
-
-        <input
-          className="form-check-input"
-          value="completed"
-          type="radio"
-          name="radioFilter"
-          id="flexRadioDefault3"
-        />
-        <label className="form-check-label" for="flexRadioDefault2">
-          &nbsp; completed &nbsp;
-        </label>
-      </form>
-      <button
-        onClick={archive}
-        className="btn btn-sm btn-danger"
-        style={{ visibility: isVisible ? "visible" : "hidden" }}
-      >
-        clear completed
-      </button>
-    </div>
-  );
-}
 
 function App() {
   const ref = useRef();
@@ -145,24 +85,8 @@ function App() {
   return (
     <div className="mt-5" style={styles.container}>
       <Header count={count} />
-      <form onSubmit={onSubmit} className="mb-4 px-4">
-        <input
-          ref={ref}
-          className="form-control mb-4"
-          type="text"
-          onChange={(e) => setInput(e.target.value)}
-        />
-      </form>
-      <ul className="px-5">
-        {allItems.map((item) => (
-          <li
-            style={item.done ? styles.item_done : {}}
-            onClick={() => check(item.id)}
-          >
-            {item.task}
-          </li>
-        ))}
-      </ul>
+      <Form ref={ref} onSubmit={onSubmit} setInput={setInput} />
+      <List allItems={allItems} check={check} styles={styles} />
       <Footer archive={archive} filter={setFilter} isVisible={isVisible} />
     </div>
   );
